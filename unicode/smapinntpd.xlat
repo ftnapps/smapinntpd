@@ -1,10 +1,10 @@
-# Charset configuration for JamNNTPd using Unicode
+# Charset configuration for SmapiNNTPd using Unicode
 #
 # It is necessary to still have the "read" translations for the charsets you
-# will be posting in or JamNNTPd will not be able to translate the receiver 
+# will be posting in or SmapiNNTPd will not be able to translate the receiver 
 # name properly. Unfortunately posting in utf-8 is not possible at this time.
 
-chsdir /home/fido/jamnntpd/xlat
+chsdir /home/fido/smapinntpd/xlat
 
 defaultread IBMPC
 

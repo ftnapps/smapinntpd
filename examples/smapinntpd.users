@@ -1,4 +1,4 @@
-# User configuration file for JamNNTd
+# User configuration file for SmapiNNTPd
 #
 # Syntax:
 #
@@ -8,7 +8,7 @@
 # 
 # Optionally, you can also specify one or more "real" names for the user. 
 # Multiple names are separated by a comma. It is necessary to supply 
-# realnames if you want to use JamNNTPd with netmail as users can only read
+# realnames if you want to use SmapiNNTPd with netmail as users can only read
 # netmails to or from one of these names. It is possible to use the "?" 
 # and "*" wildcards in the realnames. 
 #

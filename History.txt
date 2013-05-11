@@ -1,6 +1,10 @@
 
 Changes in version 1.0
 
+ - Derive SmapiNNTPd v1.0 from JamNNTPd-smapi v1.0
+ 
+Changes in version JamNNTPd 1.0
+
  - Added support for netmail and local areas (see examples/jamnntpd.groups)
  
  - Added support for cancel messages
@@ -37,7 +41,7 @@ Changes in version 1.0
 
  - Cleaned up the build process a bit.
 
-Changes in version 0.61
+Changes in version JamNNTPd 0.61
 
  - Fixed a bug that would cause JamNNTPd to crash when a JAM messagebase
    couldn't be opened.
@@ -45,7 +49,7 @@ Changes in version 0.61
  - Fixed a bug that would cause JamNNTPd to crash when a default charset
    had been specified in jamnntpd.groups. (Thanks Viktor!)
    
-Changes in version 0.6
+Changes in version JamNNTPd 0.6
 
  - Configurable charset handling based on CHS files in the GoldED+ format. 
    
@@ -105,7 +109,7 @@ Changes in version 0.6
       
  - Other minor fixes and improvements.
  
-Changes in version 0.5
+Changes in version JamNNTPd 0.5
 
  - Superfluous space characters are now removed when lines are joined when
    posting using format=flowed.
@@ -122,6 +126,6 @@ Changes in version 0.5
  - Simplified the compilation process. Now "make linux" or "make win32" in
    the src directory is enough.
 
-Changes in version 0.4
+Changes in version JamNNTPd 0.4
 
  - First public release

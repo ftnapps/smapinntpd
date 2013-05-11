@@ -1,7 +1,7 @@
 
-                               JamNNTPd 1.0
+                               SmapiNNTPd 1.0
 
-                             by Johan Billing
+                         Originally by Johan Billing
 
                             (billing@df.lth.se)
 
@@ -9,40 +9,40 @@
 
 1. Introduction
 ===============
-JamNNTPd is an attempt to merge dying fidonet technology with modern Usenet
-newsreaders. Basically, JamNNTPd is NNTP server that allows newsreaders to
+SmapiNNTPd is an attempt to merge dying fidonet technology with modern Usenet
+newsreaders. Basically, SmapiNNTPd is NNTP server that allows newsreaders to
 access a JAM messagebase. (If you didn't understand a word of this, you
-probably don't want to use JamNNTPd anyway).
+probably don't want to use SmapiNNTPd anyway).
 
-JamNNTPd can be used with both Linux and Windows. An executable binary is
-only suppplied for Windows, Linux users need to compile JamNNTPd themselves.
+SmapiNNTPd can be used with both Linux and Windows. An executable binary is
+only suppplied for Windows, Linux users need to compile SmapiNNTPd themselves.
 
 2. Copyright
 ============
-The copyright of JamNNTPd belongs to Johan Billing. Permission to use, copy
-and distribute JamNNTPd is granted provided that this copyright notice is
-included. Permission to modify JamNNTPd is granted. Distributing modified
-versions of JamNNTPd is allowed provided that the documentation clearly
-states that it is a modified version. Parts of JamNNTPd may be freely used
+The copyright of SmapiNNTPd belongs to Johan Billing. Permission to use, copy
+and distribute SmapiNNTPd is granted provided that this copyright notice is
+included. Permission to modify SmapiNNTPd is granted. Distributing modified
+versions of SmapiNNTPd is allowed provided that the documentation clearly
+states that it is a modified version. Parts of SmapiNNTPd may be freely used
 in other projects as long as credit is given.
 
-JamNNTPd uses JAMLIB for reading and modifying JAM messagebases. JAMLIB is
+SmapiNNTPd uses JAMLIB for reading and modifying JAM messagebases. JAMLIB is
 copyright 1996 Björn Stenberg and is released under the GNU Lesser General
 Public License (see included file src/jamlib/LICENSE).
 
 3. Security
 ===========
-I cannot guarantee that there are no security leaks in JamNNTPd. If you
-decide to use it, you do it on your own risk. If you use JamNNTPd under
+I cannot guarantee that there are no security leaks in SmapiNNTPd. If you
+decide to use it, you do it on your own risk. If you use SmapiNNTPd under
 Linux, you should avoid running it with root privileges.
 
-4. Using JamNNTPd
+4. Using SmapiNNTPd
 =================
 
 4.1 Configuration options
 -------------------------
-The behaviour of JamNNTPd can be configured using the configuration options 
-specified below. These can be given to JamNNTPd in two ways:
+The behaviour of SmapiNNTPd can be configured using the configuration options 
+specified below. These can be given to SmapiNNTPd in two ways:
 
 1) As commandline arguments
 
@@ -51,20 +51,20 @@ specified below. These can be given to JamNNTPd in two ways:
    A configuration file with the default settings can be created with the 
    -create option.
 
-If JamNNTPd is run without any commandline arguments at all, it will attempt 
+If SmapiNNTPd is run without any commandline arguments at all, it will attempt 
 to read options from a file called "jamnntpd.config" if present. Under Linux, 
-JamNNTPd  will look for this file in the "/etc" directory and under Windows 
+SmapiNNTPd  will look for this file in the "/etc" directory and under Windows 
 in the current directory. 
 
 It is not necessary to specify any configuration options at all unless when
-fine-tuning JamNNTPd, the default have been designed to be sensible.
+fine-tuning SmapiNNTPd, the default have been designed to be sensible.
 
 
 General options:
 
  -port <port> or -p <port>
 
-   Set the port where JamNNTPd listens for connections. The default is 5000.
+   Set the port where SmapiNNTPd listens for connections. The default is 5000.
 
  -max <maxconn> or -m <maxconn>
 
@@ -87,7 +87,7 @@ General options:
  
  -debug
 
-   If this option is used, JamNNTPd will print all sent and received text
+   If this option is used, SmapiNNTPd will print all sent and received text
    to the console window. Useful for testing.
 
 Options for displaying messages:
@@ -95,22 +95,22 @@ Options for displaying messages:
  -readorigin
   
    Get address from the Origin line instead of the OADDRESS field of the JAM 
-   message header. This option makes JamNNTPd slower, but may be useful if 
+   message header. This option makes SmapiNNTPd slower, but may be useful if 
    your tosser does not set the OADDRESS field.
       
  -noencode
 
-   JamNNTPd by default MIME-encodes headers with non-ascii characters. If you
-   use this option, JamNNTPd will instead send the headers as plain 8-bit text.
+   SmapiNNTPd by default MIME-encodes headers with non-ascii characters. If you
+   use this option, SmapiNNTPd will instead send the headers as plain 8-bit text.
 
  -strictnetmail
  
-   Makes JamNNTPd use strict article counters for netmail messages. Normally
-   JamNNTPd uses article counters that include all messages, not only those
+   Makes SmapiNNTPd use strict article counters for netmail messages. Normally
+   SmapiNNTPd uses article counters that include all messages, not only those
    that the user is allowed to read. That behaviour is much faster, but may 
    cause your newsreader to indicate the presence of new messages in the 
    netmail area even when there are only messages for other users. Using this
-   option will make JamNNTPd slower, but speed seems to be acceptable for 
+   option will make SmapiNNTPd slower, but speed seems to be acceptable for 
    small netmail areas with up to 1000 messages. Users will never be allowed 
    to actually read netmail messages of other users even when this option is 
    not used.
@@ -121,10 +121,10 @@ Options for displaying messages:
    Sets the default of the flowed and showto settings (if no default is
    specified on the commandline, both will be on by default)
 
-    flowed: If flowed is on, JamNNTPd will use format=flowed (section 6.5),
+    flowed: If flowed is on, SmapiNNTPd will use format=flowed (section 6.5),
             otherwise it will wrap long lines to a fixed width.
 
-    showto: Since there is no receiver for news messages, JamNNTPd can display
+    showto: Since there is no receiver for news messages, SmapiNNTPd can display
             the receiver name as a part of the sender name. With this option,
             this behaviour can be turned on or off.
 
@@ -135,24 +135,24 @@ Options for posting messages:
 
  -nostripre
 
-   JamNNTPd normally strips "Re:" from subject lines of followups. Use
+   SmapiNNTPd normally strips "Re:" from subject lines of followups. Use
    this option if you want to retain the "Re:".
 
  -notearline
 
-   JamNNTPd normally puts the information from the X-Newsreader or User-Agent
+   SmapiNNTPd normally puts the information from the X-Newsreader or User-Agent
    header field in the tearline of posted messages. This option disables this
    behaviour and leaves the tearline blank.
  
  -noreplyaddr
 
-   JamNNTPd normally adds a REPLYADDR kludge with the e-mail address of the
+   SmapiNNTPd normally adds a REPLYADDR kludge with the e-mail address of the
    sender in posted messages. Use this option if you don't want REPLYADDR
    kludges. See also see section 6.4 below.
 
  -notzutc
 
-   JamNNTPd normally writes the timezone into a TZUTC kludge when a message
+   SmapiNNTPd normally writes the timezone into a TZUTC kludge when a message
    is posted. You can use this option if you don't want to create TZUTC kludges.
 
  -nocancel
@@ -164,7 +164,7 @@ Options for posting messages:
  -smartquote
 
    The quoting style of most newsreaders is different from traditional fidonet
-   software. If you enable this option, JamNNTPd will try to change any quoted
+   software. If you enable this option, SmapiNNTPd will try to change any quoted
    lines to fidonet style. This means that it will try to insert the initials
    of the person you reply to before the '>' character and also that it will try
    to compound multiple generations of quotes, i.e. "AA> BB>" will be changed
@@ -172,27 +172,27 @@ Options for posting messages:
 
    Reformatting quotes in this way means that the user who posts a message will
    no longer have final say over the final content of the message since it will
-   be changed after he or she sends it to JamNNTPd. Since this in principle is
+   be changed after he or she sends it to SmapiNNTPd. Since this in principle is
    a bad thing even if quoted text will look a lot better after reformatting,
    this option is turned off by default.
 
  -origin <origin>
 
-   Normally JamNNTPd uses the text found in the Organization header line as 
+   Normally SmapiNNTPd uses the text found in the Organization header line as 
    the Origin line text in posted messages. You can use this switch to 
    override the Organization line and set your own origin for all posted 
    messages.
  
  -guestsuffix <suffix>
  
-   If desired, JamNNTPd can add a suffix to posts from unauthenticated users. 
+   If desired, SmapiNNTPd can add a suffix to posts from unauthenticated users. 
    To activate that feature, specify the suffix here. 
     
    Example:  -guestsuffix " [GUEST]".
    
  -echomailjam <echomail.jam>
  
-   If you specify a filename here, JamNNTPd will write a line to this file 
+   If you specify a filename here, SmapiNNTPd will write a line to this file 
    with the messagebase and message number for each message that is posted.
    The file follows the ECHOMAIL.JAM format supported by some tossers. 
  
@@ -210,8 +210,8 @@ Options for configuration files:
        
 4.2 Access rights
 -----------------
-Access rights in JamNNTPd is based on access groups. Every newsgroup in
-JamNNTPd belongs to an acess group. Access groups are named using one letter,
+Access rights in SmapiNNTPd is based on access groups. Every newsgroup in
+SmapiNNTPd belongs to an acess group. Access groups are named using one letter,
 typically A to Z (access groups are case-insensitive). In the configuration
 files, you can use "*" for "all groups" and "-" for "no groups". 
 
@@ -228,9 +228,9 @@ defined in the "users" file.
 
 4.3 Configuration files
 -----------------------
-JamNNTPd uses four configuration files:
+SmapiNNTPd uses four configuration files:
 
-1) In the "groups" file, the JAM areas that JamNNTPd should provide as
+1) In the "groups" file, the JAM areas that SmapiNNTPd should provide as
    newsgroups are configured.
 
 2) In the "allow" file, the IP numbers that are allowed to use the server
@@ -244,7 +244,7 @@ JamNNTPd uses four configuration files:
    character sets used in your JAM messagebase and your newsreader.
 
 The format of these files can be seen in the example configuration files.
-You do not need to restart JamNNTPd if you change them since they are read
+You do not need to restart SmapiNNTPd if you change them since they are read
 every time a new connection to the server is made.
 
 4.4 Logging in with parameters
@@ -268,10 +268,10 @@ Examples:
 
 5. Compilation
 ==============
-JamNNTPd should compile with most compilers. I use gcc under Linux and MinGW
-under Windows. To compile JamNNTPd, go to the src directory and type either 
+SmapiNNTPd should compile with most compilers. I use gcc under Linux and MinGW
+under Windows. To compile SmapiNNTPd, go to the src directory and type either 
 "make linux" or "make win32" depending on what platform you are compiling 
-JamNNTPd on. After a successful compilation, you will find a file called 
+SmapiNNTPd on. After a successful compilation, you will find a file called 
 "jamnntpd" or "jamnntpd.exe" in the src directory.
 
 6. Compatibility
@@ -279,15 +279,15 @@ JamNNTPd on. After a successful compilation, you will find a file called
 
 6.1 The NNTP protocol
 ---------------------
-JamNNTPd supports most of the basic NNTP protocol as specified in RFC-977.
+SmapiNNTPd supports most of the basic NNTP protocol as specified in RFC-977.
 The commands IHAVE, NEWGROUPS and NEWNEWS are not implemented, but at least
-give valid response codes if a newsreader tries to use them. JamNNTPd also
+give valid response codes if a newsreader tries to use them. SmapiNNTPd also
 supports the XOVER and AUTHINFO commands as specified in RFC-2980. XOVER
 never sends information about the line counts and byte counts of messages.
 
 6.2 Format of news messages
 ---------------------------
-JamNNTPd probably breaks the RFC-1036 specification on some minor points,
+SmapiNNTPd probably breaks the RFC-1036 specification on some minor points,
 but seems to work well enough with most newsreaders.
 
 MIME is supported. Headers with non-ascii characters are encoded using
@@ -303,16 +303,16 @@ rejected). Crossposted messages will be rejected. Messages longer than
 
 6.3 MSGID / Message-ID
 ----------------------
-JamNNTPd does not present the MSGIDs found in the JAM messagebase as
+SmapiNNTPd does not present the MSGIDs found in the JAM messagebase as
 Message-IDs to the newsreader, but rather uses its own dummy Message-IDs
 instead. The references line in followups will be replaced by the proper
 REPLY line.
 
 6.4 REPLYADDR
 -------------
-When a message is posted to a JAM messagebase, JamNNTPd converts the original
+When a message is posted to a JAM messagebase, SmapiNNTPd converts the original
 from address to a REPLYADDR kludge. According to FSC-0035, REPLYADDR kludges
-should be accompanied by a REPLYTO line. JamNNTPd does not create a REPLYTO
+should be accompanied by a REPLYTO line. SmapiNNTPd does not create a REPLYTO
 line, but this should not be a major problem. If you want to disable the
 REPLYADDR kludge altogether, use the -noreplyaddr option.
 
@@ -323,22 +323,22 @@ i. e. text that only has line breaks between paragraphs and not after every
 line. This format is more well-suited for fidonet messages than the
 traditional format since fidonet has always used "flowed" text.
 
-JamNNTPd uses format=flowed unless disabled with the -def_flowed switch or
+SmapiNNTPd uses format=flowed unless disabled with the -def_flowed switch or
 with login parameters, and it is preferable to use a newsreader that also 
 supports this format. Unfortunately, only few newsreaders support this format 
-today. JamNNTPd will also work with other newsreaders, but messages will look 
+today. SmapiNNTPd will also work with other newsreaders, but messages will look 
 slightly worse both on the NNTP and fidonet side.
 
 6.6 Character set translation
 -----------------------------
-JamNNTPd has good support for character sets. The character set translation
+SmapiNNTPd has good support for character sets. The character set translation
 is configured in the "xlat" file and uses CHS files in the GoldED+ format for
 the actual translation. Extended CHS files with 256 character translations
 are supported and a character may be translated to up to four characters.
 
 6.7 Netmail
 -----------
-JamNNTPd now also supports netmail. In netmail areas, users can only read
+SmapiNNTPd now also supports netmail. In netmail areas, users can only read
 messages to or from one of the names configured in the jamnntpd.users file.
 Replies to netmails are handled transparently and the name and address of
 the recipient are taken from the original message. When a user wants to write
@@ -356,7 +356,7 @@ netmail and echomail areas.
  
 6.8 Tested newsreaders
 ----------------------
-JamNNTPd has been found to work with the following newsreaders:
+SmapiNNTPd has been found to work with the following newsreaders:
 
    Mozilla 1.4.1
    Outlook Express 6.00.2800.1106

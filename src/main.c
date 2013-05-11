@@ -317,7 +317,7 @@ void createconfig(uchar *file)
       return;
    }
    
-   fprintf(fp,"# JamNNTPd configuration file\n");
+   fprintf(fp,"# SmapiNNTPd configuration file\n");
    fprintf(fp,"port %lu\n",cfg_port);
    fprintf(fp,"max %lu\n",cfg_maxconn);
    fprintf(fp,"groups \"%s\"\n",cfg_groupsfile);
@@ -375,11 +375,11 @@ int main(int argc, char **argv)
            /*          1         2         3         4         5         6         7         8 */
            /* 12345678901234567890123456789012345678901234567890123456789012345678901234567890 */     
       printf("\n"
-             "Usage: jamnntpd [<options>]\n"
+             "Usage: smapinntpd [<options>]\n"
              "\n"
              " General options:\n"
              "\n"
-             " -p[ort] <port>         Port number for JamNNTPd (default: 5000)\n"
+             " -p[ort] <port>         Port number for SmapiNNTPd (default: 5000)\n"
              " -m[ax] <maxconn>       Maximum number of simultaneous connections (default: 5)\n"
              " -g[roups] <groupsfile> Read this file instead of " CFG_GROUPSFILE "\n"
              " -a[llow] <allowfile>   Read this file instead of " CFG_ALLOWFILE "\n"
@@ -414,7 +414,7 @@ int main(int argc, char **argv)
              " -config <file>        Read options from this file\n"
              " -create <file>        Create a configuration file with the default options\n"
              "\n"
-             "If no options are specified on the commandline, JamNNTPd will attempt to read\n"
+             "If no options are specified on the commandline, SmapiNNTPd will attempt to read\n"
              "options from " CONFIGFILE " (if it exists).\n"
              "\n");
       

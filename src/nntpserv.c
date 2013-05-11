@@ -400,7 +400,7 @@ void command_next(struct var *var)
 
    var->currentarticle++;
 
-   sockprintf(var,"223 %lu <%lu$%s@JamNNTPd> Article retrieved" CRLF,
+   sockprintf(var,"223 %lu <%lu$%s@SmapiNNTPd> Article retrieved" CRLF,
       var->currentarticle,var->currentarticle,var->currentgroup->tagname);
 }
 
@@ -434,7 +434,7 @@ void command_last(struct var *var)
 
    var->currentarticle--;
 
-   sockprintf(var,"223 %lu <%lu$%s@JamNNTPd> Article retrieved" CRLF,
+   sockprintf(var,"223 %lu <%lu$%s@SmapiNNTPd> Article retrieved" CRLF,
       var->currentarticle,var->currentarticle,var->currentgroup->tagname);
 }
 
@@ -644,7 +644,7 @@ void command_abhs(struct var *var,uchar *cmd)
       at++;
       pc++;
 
-      if(strcmp(at,"JamNNTPd") != 0)
+      if(strcmp(at,"SmapiNNTPd") != 0)
       {
          socksendtext(var,"430 No such article found" CRLF);
          return;
@@ -712,7 +712,7 @@ void command_abhs(struct var *var,uchar *cmd)
 
    if(stricmp(cmd,"STAT") == 0)
    {
-      sockprintf(var,"223 %lu <%lu$%s@JamNNTPd> Article retrieved" CRLF,
+      sockprintf(var,"223 %lu <%lu$%s@SmapiNNTPd> Article retrieved" CRLF,
          articlenum,articlenum,group->tagname);
 
       return;
@@ -908,13 +908,13 @@ void command_abhs(struct var *var,uchar *cmd)
    }
       
    if(stricmp(cmd,"ARTICLE")==0)
-      sockprintf(var,"220 %ld <%ld$%s@JamNNTPd> Article retrieved - Head and body follow" CRLF,articlenum,articlenum,group->tagname);
+      sockprintf(var,"220 %ld <%ld$%s@SmapiNNTPd> Article retrieved - Head and body follow" CRLF,articlenum,articlenum,group->tagname);
 
    if(stricmp(cmd,"HEAD")==0)
-      sockprintf(var,"221 %ld <%ld$%s@JamNNTPd> Article retrieved - Head follows" CRLF,articlenum,articlenum,group->tagname);
+      sockprintf(var,"221 %ld <%ld$%s@SmapiNNTPd> Article retrieved - Head follows" CRLF,articlenum,articlenum,group->tagname);
 
    if(stricmp(cmd,"BODY")==0)
-      sockprintf(var,"222 %ld <%ld$%s@JamNNTPd> Article retrieved - Body follows" CRLF,articlenum,articlenum,group->tagname);
+      sockprintf(var,"222 %ld <%ld$%s@SmapiNNTPd> Article retrieved - Body follows" CRLF,articlenum,articlenum,group->tagname);
 
    if(stricmp(cmd,"ARTICLE") == 0 || stricmp(cmd,"HEAD") == 0)
    {
@@ -933,7 +933,7 @@ void command_abhs(struct var *var,uchar *cmd)
       if(replyaddr[0]) strcpy(dispaddr,replyaddr);
       else             strcpy(dispaddr,fromaddr);
       
-      sockprintf(var,"Path: JamNNTPd!not-for-mail" CRLF);
+      sockprintf(var,"Path: SmapiNNTPd!not-for-mail" CRLF);
 
       mimesendheaderline(var,"From",dispname,chrs,dispaddr,cfg_noencode);
       mimesendheaderline(var,"X-Comment-To",toname,chrs,NULL,cfg_noencode);
@@ -943,11 +943,11 @@ void command_abhs(struct var *var,uchar *cmd)
       makedate(&xmsg.date_written,buf,timezone);
       sockprintf(var,"Date: %s" CRLF,buf); 
       
-      sockprintf(var,"Message-ID: <%ld$%s@JamNNTPd>" CRLF,articlenum,group->tagname);
+      sockprintf(var,"Message-ID: <%ld$%s@SmapiNNTPd>" CRLF,articlenum,group->tagname);
 
       if(xmsg.replyto)
 
-         sockprintf(var,"References: <%ld$%s@JamNNTPd>" CRLF,xmsg.replyto,group->tagname);
+         sockprintf(var,"References: <%ld$%s@SmapiNNTPd>" CRLF,xmsg.replyto,group->tagname);
       
       sprintf(fromaddr,"%u:%u/%u.%u",xmsg.orig.zone,xmsg.orig.net,xmsg.orig.node,xmsg.orig.point);
       sprintf(toaddr,"%u:%u/%u.%u",xmsg.dest.zone,xmsg.dest.net,xmsg.dest.node,xmsg.dest.point);
@@ -1310,12 +1310,12 @@ void command_xover(struct var *var)
                   
                      makedate(&xmsg.date_written,datebuf,timezone);
                   
-                     sprintf(msgid,"<%ld$%s@JamNNTPd>",c,var->currentgroup->tagname);
+                     sprintf(msgid,"<%ld$%s@SmapiNNTPd>",c,var->currentgroup->tagname);
       
                      reply[0]=0;
       
                      if(xmsg.replyto)
-                        sprintf(reply,"<%ld$%s@JamNNTPd>",xmsg.replyto,var->currentgroup->tagname);
+                        sprintf(reply,"<%ld$%s@SmapiNNTPd>",xmsg.replyto,var->currentgroup->tagname);
       
                      mimemakeheaderline(mimefrom,1000,"From",dispname,chrs,dispaddr,cfg_noencode);
                      mimemakeheaderline(mimesubj,1000,"Subject",subject,chrs,NULL,cfg_noencode);
@@ -1454,7 +1454,7 @@ void getparentinfo(struct var *var,uchar *article,uchar *currentgroup,uchar *msg
    at++;
    pc++;
 
-   if(strcmp(at,"JamNNTPd") != 0)
+   if(strcmp(at,"SmapiNNTPd") != 0)
       return;
 
    /* Find group */
@@ -1645,7 +1645,7 @@ void cancelmessage(struct var *var,uchar *article,struct xlat *postxlat)
    at++;
    pc++;
 
-   if(strcmp(at,"JamNNTPd") != 0)
+   if(strcmp(at,"SmapiNNTPd") != 0)
    {
       socksendtext(var,"441 POST failed (Article to cancel not found)" CRLF);
       return;
@@ -1654,7 +1654,7 @@ void cancelmessage(struct var *var,uchar *article,struct xlat *postxlat)
    for(group=var->firstgroup;group;group=group->next)
       if(matchgroup(var->readgroups,group->group) && stricmp(pc,group->tagname) == 0) break;
 
-   if(strcmp(at,"JamNNTPd") != 0)
+   if(strcmp(at,"SmapiNNTPd") != 0)
    {
       socksendtext(var,"441 POST failed (Article to cancel not found)" CRLF);
       return;
@@ -3096,7 +3096,7 @@ void server(SOCKET s)
             socksendtext(&var,"STAT" CRLF);
             socksendtext(&var,"XOVER (partially implemented, byte count and line count are always empty)" CRLF);
             socksendtext(&var,CRLF);
-            socksendtext(&var,"JamNNTPd supports most of RFC-977 and also has support for AUTHINFO and" CRLF);
+            socksendtext(&var,"SmapiNNTPd supports most of RFC-977 and also has support for AUTHINFO and" CRLF);
             socksendtext(&var,"limited XOVER support (RFC-2980)" CRLF);
             socksendtext(&var,"." CRLF);
          }

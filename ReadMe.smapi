@@ -1,8 +1,7 @@
-This is an experimental version of JamNNTPd with SMAPI support. It was written 
-mainly to find out whether it was possible to use SMAPI for the program. The
+This is an experimental version of JamNNTPd with SMAPI support; originally
+named jamnntpd-smapi and later renamed as SmapiNNTPd. It was written mainly
+to find out whether it was possible to use SMAPI for the program. The
 program seems to work, but has not been thoroughly tested, use with caution. 
-
-I have not yet decided if future versions of JamNNTPd will use SMAPI or not.
 
 This program needs SMAPI to run, get it at http://husky.sourceforge.net/
 
@@ -18,4 +17,4 @@ your current jamnntpd.groups file with this version as well.
 If you decide to try out this version, it would be nice to hear about your
 experiences, e-mail me at billing@df.lth.se or post in the JAMNNTPD echo.
 
-/Johan
+/Johan, RJ

@@ -76,7 +76,7 @@ struct var
 
 #define CRLF CR LF
 
-#define SERVER_NAME       "JamNNTPd-SMAPI/" PLATFORM_NAME
+#define SERVER_NAME       "SmapiNNTPd/" PLATFORM_NAME
 #define SERVER_VERSION    "1.0"
 #define SERVER_PIDVERSION "1"
 
@@ -90,17 +90,17 @@ int get_server_quit(void);
 
 void server(SOCKET s);
 
-#define CONFIGFILE         CFG_BASEPATH "jamnntpd.config"
+#define CONFIGFILE         CFG_BASEPATH "smapinntpd.config"
 
 #define CFG_PORT           5000
 #define CFG_MAXCONN        5
 
-#define CFG_ALLOWFILE      CFG_BASEPATH "jamnntpd.allow"
-#define CFG_GROUPSFILE     CFG_BASEPATH "jamnntpd.groups"
-#define CFG_USERSFILE      CFG_BASEPATH "jamnntpd.users"
-#define CFG_XLATFILE       CFG_BASEPATH "jamnntpd.xlat"
+#define CFG_ALLOWFILE      CFG_BASEPATH "smapinntpd.allow"
+#define CFG_GROUPSFILE     CFG_BASEPATH "smapinntpd.groups"
+#define CFG_USERSFILE      CFG_BASEPATH "smapinntpd.users"
+#define CFG_XLATFILE       CFG_BASEPATH "smapinntpd.xlat"
 
-#define CFG_LOGFILE        LOG_BASEPATH "jamnntpd.log"
+#define CFG_LOGFILE        LOG_BASEPATH "smapinntpd.log"
 
 #define CFG_DEF_FLOWED     TRUE
 #define CFG_DEF_SHOWTO     TRUE

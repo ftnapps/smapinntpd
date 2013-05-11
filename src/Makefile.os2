@@ -11,15 +11,15 @@ STRIP = emxbind -s
 
 OBJS = main.o nntpserv.o os_os2.o sockio.o groups.o misc.o xlat.o allow.o login.o mime.o
 
-targets: jamnntpd$(EXESUFFIX) makechs$(EXESUFFIX)
+targets: smapinntpd$(EXESUFFIX) makechs$(EXESUFFIX)
 
 makechs$(EXESUFFIX): makechs.c
 	$(CC) $(PLATFORMDEF) makechs.c -o makechs$(EXESUFFIX)
 	$(STRIP) makechs$(EXESUFFIX)
 
-jamnntpd$(EXESUFFIX): $(OBJS)
-	$(CC) -o jamnntpd$(EXESUFFIX) $(OBJS) -lsmapi -lsocket
-	$(STRIP) jamnntpd$(EXESUFFIX)
+smapinntpd$(EXESUFFIX): $(OBJS)
+	$(CC) -o smapinntpd$(EXESUFFIX) $(OBJS) -lsmapi -lsocket
+	$(STRIP) smapinntpd$(EXESUFFIX)
 
 nntpserv.o : nntpserv.c
 	$(CC) $(PLATFORMDEF) -c nntpserv.c -o nntpserv.o

@@ -327,3 +327,12 @@ void extractorigin(uchar *text,uchar *addr)
       }
    }
 }
+
+uchar * trim(uchar * s) {
+    int l = strlen(s);
+
+    while(isspace(s[l - 1])) --l;
+    while(* s && isspace(* s)) ++s, --l;
+
+    return strndup(s, l);
+}

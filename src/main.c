@@ -11,6 +11,7 @@ void createconfig(uchar *file);
 bool parseargs(int argc, char **argv,uchar *filename,ulong line)
 {   
    uchar *arg,src[100],tmp[200];
+   uchar *token;
    int c;
    
    src[0]=0;
@@ -136,8 +137,25 @@ bool parseargs(int argc, char **argv,uchar *filename,ulong line)
             printf("Missing argument for %s%s\n",argv[c],src);
             return(FALSE);
          }
+         token = strtok(argv[c++],"|"); //jump over ORIGIN
+         token = strtok(argv[c++],"|");
+         while (token  != NULL) 
+         {
+            num_origins++;
+            cfg_origin[num_origins] = malloc(strlen(token) +1);
+            strcpy(cfg_origin[num_origins],trim(token));
+            token = strtok(argv[c++],"|");
+          }  
+      }
+      else if(stricmp(arg,"-exitflag")==0)
+      {
+         if(c+1 == argc)
+         {
+            printf("Missing argument for %s%s\n",argv[c],src);
+            return(FALSE);
+         }
 
-         cfg_origin=argv[++c];
+         cfg_exitflag=argv[++c];
       }
       else if(stricmp(arg,"-guestsuffix")==0)
       {
@@ -310,6 +328,8 @@ bool readargs(uchar *file)
 void createconfig(uchar *file)
 {
    FILE *fp;
+   int i;
+   uchar *token;
    
    if(!(fp=fopen(file,"w")))
    { 
@@ -339,7 +359,16 @@ void createconfig(uchar *file)
    fprintf(fp,"%snocancel\n",cfg_nocancel ? "" : "#");
    fprintf(fp,"%ssmartquote\n",cfg_smartquote ? "" : "#");
    
-   if(cfg_origin) fprintf(fp,"origin \"%s\"\n",cfg_origin);
+   if(num_origins != -1)
+   {
+      token = malloc(sizeof(cfg_origin)+num_origins*sizeof(char));
+      for (i=0;(cfg_origin[i] != NULL);i++)
+      {
+         strcat(token,cfg_origin[i]);  
+         strcat(token,"|");           
+      }
+      fprintf(fp,"origin \"%s\"\n",token); 
+   }
    else           fprintf(fp,"#origin <origin>\n");
    
    if(cfg_guestsuffix) fprintf(fp,"guestsuffix \"%s\"\n",cfg_guestsuffix);

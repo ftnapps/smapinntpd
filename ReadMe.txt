@@ -181,7 +181,11 @@ Options for posting messages:
    Normally SmapiNNTPd uses the text found in the Organization header line as 
    the Origin line text in posted messages. You can use this switch to 
    override the Organization line and set your own origin for all posted 
-   messages.
+   messages. One can have up to 10 Origins, that are selected at random.
+   If using more than one Origin, they must be seoerated by the "|" sign.
+   Origin "Linux what else|BB is watching U|Don't talk nonsense!|"
+	 
+	 
  
  -guestsuffix <suffix>
  

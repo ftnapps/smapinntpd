@@ -147,6 +147,16 @@ bool parseargs(int argc, char **argv,uchar *filename,ulong line)
             token = strtok(argv[c++],"|");
           }  
       }
+      else if(stricmp(arg,"-exitflag")==0)
+      {
+         if(c+1 == argc)
+         {
+            printf("Missing argument for %s%s\n",argv[c],src);
+            return(FALSE);
+         }
+
+         cfg_exitflag=argv[++c];
+      }
       else if(stricmp(arg,"-guestsuffix")==0)
       {
          if(c+1 == argc)

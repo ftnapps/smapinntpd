@@ -120,6 +120,7 @@ extern int num_origins;
 extern uchar *cfg_origin[MAX_NUMBERS_ORIGIN];
 extern uchar *cfg_guestsuffix;
 extern uchar *cfg_echomailjam;
+extern uchar *cfg_exitflag;
 
 extern bool cfg_debug;
 extern bool cfg_noxlat;

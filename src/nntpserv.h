@@ -20,7 +20,9 @@ typedef int bool;
 typedef unsigned char uchar;
 
 #include <smapi/msgapi.h>
+#ifndef __PROGPROT_H__
 #include <smapi/progprot.h>
+#endif
 
 struct var
 {

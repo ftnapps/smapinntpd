@@ -23,7 +23,6 @@ typedef unsigned char uchar;
 #ifndef __PROGPROT_H__
 #include <smapi/progprot.h>
 #endif
-
 struct var
 {
    struct sockio *sio;
@@ -107,6 +106,8 @@ void server(SOCKET s);
 #define CFG_DEF_FLOWED     TRUE
 #define CFG_DEF_SHOWTO     TRUE
 
+#define MAX_NUMBERS_ORIGIN	10
+
 extern ulong cfg_port;
 extern ulong cfg_maxconn;
 extern uchar *cfg_allowfile;
@@ -115,7 +116,8 @@ extern uchar *cfg_logfile;
 extern uchar *cfg_usersfile;
 extern uchar *cfg_xlatfile;
 
-extern uchar *cfg_origin;
+extern int num_origins;
+extern uchar *cfg_origin[MAX_NUMBERS_ORIGIN];
 extern uchar *cfg_guestsuffix;
 extern uchar *cfg_echomailjam;
 

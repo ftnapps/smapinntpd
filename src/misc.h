@@ -15,3 +15,4 @@ void makedate(struct _stamp *stamp,uchar *dest,uchar *tz);
 void stripreplyaddr(uchar *str);
 void stripchrs(uchar *str);
 void extractorigin(uchar *text,uchar *addr);
+uchar *trim(uchar *s);

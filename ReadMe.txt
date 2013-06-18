@@ -182,7 +182,7 @@ Options for posting messages:
    the Origin line text in posted messages. You can use this switch to 
    override the Organization line and set your own origin for all posted 
    messages. One can have up to 10 Origins, that are selected at random.
-   If using more than one Origin, they must be seoerated by the "|" sign.
+   If using more than one Origin, they must be separated by the "|" sign.
    Origin "Linux what else|BB is watching U|Don't talk nonsense!|"
 	 
 	 

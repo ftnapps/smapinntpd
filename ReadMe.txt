@@ -1,11 +1,6 @@
 
-                               SmapiNNTPd 1.0
-
-                         Originally by Johan Billing
-
-                            (billing@df.lth.se)
-
-                                2004-10-20
+                                    SmapiNNTPd
+                                    ==========
 
 1. Introduction
 ===============

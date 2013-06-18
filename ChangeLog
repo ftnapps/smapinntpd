@@ -1,0 +1,33 @@
+2013-06-18  Robert James Clay  <jame@rocasa.us>
+
+  * Release as version 1.1.
+
+  * History.txt:
+    - Change the format of the entries, remove the pre SmapiNNTPd
+      entries, and rename it to ChangeLog.
+
+  * Readme.txt:
+    - Rename the file ReadMe.txt as README.
+    - Correct spelling of the word 'seoerated' to 'separated'.
+    - Initial updates and corrections to the Copyright section.
+    - Move relevant content of ReadMe.smapi to ReadMe.txt.
+    - Derive section 8 from the content of the ReadMe_hpt.txt file.
+
+  * ReadMe.smapi, ReadMe_hpt.txt:
+    - Removed them after moving their content to the README file.
+
+
+2013-06-17  Ruedi Knebuehler  <ruedi@baboon.ch>
+
+ * Modification to touch a flag to force another programm to exit.
+
+ * Added feature to have up to 10 different Origins, that are added to a new
+   message by chance.
+
+ * Made some changes to get it to compile on linux systems.
+
+
+2013-05-10  Robert James Clay  <jame@rocasa.us>
+
+ * Derive SmapiNNTPd v1.0 from JamNNTPd-smapi v1.0
+

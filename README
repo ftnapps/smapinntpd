@@ -1,34 +1,28 @@
 
-                               SmapiNNTPd 1.0
-
-                         Originally by Johan Billing
-
-                            (billing@df.lth.se)
-
-                                2004-10-20
+                                    SmapiNNTPd
+                                    ==========
 
 1. Introduction
 ===============
-SmapiNNTPd is an attempt to merge dying fidonet technology with modern Usenet
-newsreaders. Basically, SmapiNNTPd is NNTP server that allows newsreaders to
-access a JAM messagebase. (If you didn't understand a word of this, you
-probably don't want to use SmapiNNTPd anyway).
+SmapiNNTPd is an NNTP server that allows newsreaders to access JAM, Squish,
+or *.msg message bases and was originally derived from JamNNTPd which could
+only access JAM message bases.
 
-SmapiNNTPd can be used with both Linux and Windows. An executable binary is
-only suppplied for Windows, Linux users need to compile SmapiNNTPd themselves.
+This program needs SMAPI to run, get it at http://husky.sourceforge.net/
+
 
 2. Copyright
 ============
-The copyright of SmapiNNTPd belongs to Johan Billing. Permission to use, copy
-and distribute SmapiNNTPd is granted provided that this copyright notice is
-included. Permission to modify SmapiNNTPd is granted. Distributing modified
-versions of SmapiNNTPd is allowed provided that the documentation clearly
-states that it is a modified version. Parts of SmapiNNTPd may be freely used
-in other projects as long as credit is given.
 
-SmapiNNTPd uses JAMLIB for reading and modifying JAM messagebases. JAMLIB is
-copyright 1996 Björn Stenberg and is released under the GNU Lesser General
-Public License (see included file src/jamlib/LICENSE).
+Copyright (C)      2013, Robert James Clay <jame@rocasa.us>
+Copyright (C)      2013, Ruedi Knebuehler <ruedi@baboon.ch>
+Copyright (C) 1998-2005, Johan Billing <billing@df.lth.se>
+
+Permission to use, copy and distribute SmapiNNTPd is granted provided that
+this copyright notice is included. Permission to modify SmapiNNTPd is granted.
+Distributing modified versions of SmapiNNTPd is allowed provided that the
+documentation clearly states that it is a modified version. Parts of SmapiNNTPd
+may be freely used in other projects as long as credit is given.
 
 3. Security
 ===========
@@ -182,7 +176,7 @@ Options for posting messages:
    the Origin line text in posted messages. You can use this switch to 
    override the Organization line and set your own origin for all posted 
    messages. One can have up to 10 Origins, that are selected at random.
-   If using more than one Origin, they must be seoerated by the "|" sign.
+   If using more than one Origin, they must be separated by the "|" sign.
    Origin "Linux what else|BB is watching U|Don't talk nonsense!|"
 	 
 	 
@@ -234,8 +228,15 @@ defined in the "users" file.
 -----------------------
 SmapiNNTPd uses four configuration files:
 
-1) In the "groups" file, the JAM areas that SmapiNNTPd should provide as
-   newsgroups are configured.
+1) In the "groups" file, the message areas that SmapiNNTPd should provide as
+   newsgroups are configured. The first character of the path decides the
+   messagebase type:
+
+!path => JAM
+$path => Squish
+#path => *.msg
+
+If the first character is neither of those, JAM will be assumed.
 
 2) In the "allow" file, the IP numbers that are allowed to use the server
    are listed. Here you also set the default access rights for users before
@@ -412,4 +413,28 @@ Examples:
  
 Mappings files for all imaginable character sets can be found at the Unicode 
 site above.
+
+8. Using the Husky project HPT tosser
+=====================================
+Some notes on using SmapiNNTPd with the hpt tosser from the Husky project:
+
+ * The fidoconfig2jamnntpd.pl script homepage can be used to convert your
+   area configuration to a jamnntpd.groups file.
+
+ * If you want SmapiNNTPd to display the From address correctly, you need to
+   run it with the -readorigin switch.
+
+ * When hpt creates JAM messagebases, it does not create the lastread (*.jlr)
+   file. SmapiNNTPd will not be able to open an area unless all four JAM files
+   are present. The checkgroups.pl script from the SmapiNNTPd homepage can be
+   used to create missing *.jlr files.
+
+ * Do NOT pack your messagebase with "hpt pack". When hpt packs a messagebase,
+   it will also renumber it. This will cause the article numbers in SmapiNNTPd
+   to change which will confuse most newsreaders.
+
+ * SmapiNNTPd can optionally create an echomail.jam files with the paths to
+   messagebases with messages to export. This file can not be used to tell
+   hpt what areas to scan, but it can be converted to an echotoss.log file
+   for hpt with the echomailjam2hpt.pl script.
 

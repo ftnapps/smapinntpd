@@ -78,8 +78,8 @@ struct var
 #define CRLF CR LF
 
 #define SERVER_NAME       "SmapiNNTPd/" PLATFORM_NAME
-#define SERVER_VERSION    "1.0"
-#define SERVER_PIDVERSION "1"
+#define SERVER_VERSION    "1.1"
+#define SERVER_PIDVERSION "1.1"
 
 #define SOCKIO_TIMEOUT 5*60
 

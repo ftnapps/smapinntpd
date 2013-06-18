@@ -4,13 +4,12 @@
 
 1. Introduction
 ===============
-SmapiNNTPd is an attempt to merge dying fidonet technology with modern Usenet
-newsreaders. Basically, SmapiNNTPd is NNTP server that allows newsreaders to
-access a JAM messagebase. (If you didn't understand a word of this, you
-probably don't want to use SmapiNNTPd anyway).
+SmapiNNTPd is an NNTP server that allows newsreaders to access JAM, Squish,
+or *.msg message bases and was originally derived from JamNNTPd which could
+only access JAM message bases.
 
-SmapiNNTPd can be used with both Linux and Windows. An executable binary is
-only suppplied for Windows, Linux users need to compile SmapiNNTPd themselves.
+This program needs SMAPI to run, get it at http://husky.sourceforge.net/
+
 
 2. Copyright
 ============
@@ -229,8 +228,15 @@ defined in the "users" file.
 -----------------------
 SmapiNNTPd uses four configuration files:
 
-1) In the "groups" file, the JAM areas that SmapiNNTPd should provide as
-   newsgroups are configured.
+1) In the "groups" file, the message areas that SmapiNNTPd should provide as
+   newsgroups are configured. The first character of the path decides the
+   messagebase type:
+
+!path => JAM
+$path => Squish
+#path => *.msg
+
+If the first character is neither of those, JAM will be assumed.
 
 2) In the "allow" file, the IP numbers that are allowed to use the server
    are listed. Here you also set the default access rights for users before

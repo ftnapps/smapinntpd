@@ -19,16 +19,16 @@ only suppplied for Windows, Linux users need to compile SmapiNNTPd themselves.
 
 2. Copyright
 ============
-The copyright of SmapiNNTPd belongs to Johan Billing. Permission to use, copy
-and distribute SmapiNNTPd is granted provided that this copyright notice is
-included. Permission to modify SmapiNNTPd is granted. Distributing modified
-versions of SmapiNNTPd is allowed provided that the documentation clearly
-states that it is a modified version. Parts of SmapiNNTPd may be freely used
-in other projects as long as credit is given.
 
-SmapiNNTPd uses JAMLIB for reading and modifying JAM messagebases. JAMLIB is
-copyright 1996 Björn Stenberg and is released under the GNU Lesser General
-Public License (see included file src/jamlib/LICENSE).
+Copyright (C)      2013, Robert James Clay <jame@rocasa.us>
+Copyright (C)      2013, Ruedi Knebuehler <ruedi@baboon.ch>
+Copyright (C) 1998-2005, Johan Billing <billing@df.lth.se>
+
+Permission to use, copy and distribute SmapiNNTPd is granted provided that
+this copyright notice is included. Permission to modify SmapiNNTPd is granted.
+Distributing modified versions of SmapiNNTPd is allowed provided that the
+documentation clearly states that it is a modified version. Parts of SmapiNNTPd
+may be freely used in other projects as long as credit is given.
 
 3. Security
 ===========

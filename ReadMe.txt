@@ -414,3 +414,27 @@ Examples:
 Mappings files for all imaginable character sets can be found at the Unicode 
 site above.
 
+8. Using the Husky project HPT tosser
+=====================================
+Some notes on using SmapiNNTPd with the hpt tosser from the Husky project:
+
+ * The fidoconfig2jamnntpd.pl script homepage can be used to convert your
+   area configuration to a jamnntpd.groups file.
+
+ * If you want SmapiNNTPd to display the From address correctly, you need to
+   run it with the -readorigin switch.
+
+ * When hpt creates JAM messagebases, it does not create the lastread (*.jlr)
+   file. SmapiNNTPd will not be able to open an area unless all four JAM files
+   are present. The checkgroups.pl script from the SmapiNNTPd homepage can be
+   used to create missing *.jlr files.
+
+ * Do NOT pack your messagebase with "hpt pack". When hpt packs a messagebase,
+   it will also renumber it. This will cause the article numbers in SmapiNNTPd
+   to change which will confuse most newsreaders.
+
+ * SmapiNNTPd can optionally create an echomail.jam files with the paths to
+   messagebases with messages to export. This file can not be used to tell
+   hpt what areas to scan, but it can be converted to an echotoss.log file
+   for hpt with the echomailjam2hpt.pl script.
+

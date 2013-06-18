@@ -83,8 +83,7 @@ struct var
 #define CRLF CR LF
 
 #define SERVER_NAME       "JamNNTPd-SMAPI/" PLATFORM_NAME
-#define SERVER_VERSION    "1.1"
-#define SERVER_PIDVERSION "1"
+#define SERVER_VERSION    "1.2.1"
 
 #define SOCKIO_TIMEOUT 5*60
 

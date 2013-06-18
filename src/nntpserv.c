@@ -12,6 +12,7 @@ uchar *cfg_groupsfile = CFG_GROUPSFILE;
 uchar *cfg_logfile    = CFG_LOGFILE;
 #ifdef TLSENABLED
 uchar *cfg_certfile   = NULL;
+SSL_CTX *sslContext;
 #endif
 uchar *cfg_usersfile  = CFG_USERSFILE;
 uchar *cfg_xlatfile   = CFG_XLATFILE;
@@ -2685,14 +2686,23 @@ void command_post(struct var *var)
       else           sprintf(&kludges[strlen(kludges)],"\01REPLYADDR %s",fromaddr);
    }
 
-   sprintf(&kludges[strlen(kludges)],"\01PID: " SERVER_NAME " " SERVER_PIDVERSION);
+   sprintf(&kludges[strlen(kludges)],"\01PID: " SERVER_NAME " " SERVER_VERSION);
 
    if(xlat->tochrs[0] && !g->nochrs)
    {
       setchrscodepage(chrs,codepage,xlat->tochrs);
       
-      if(chrs[0])
-         sprintf(&kludges[strlen(kludges)],"\01CHRS: %s 2",chrs);
+      if(chrs[0]) 
+      {
+         if(!strcmp(chrs, "UTF-8"))
+	 {
+	    sprintf(&kludges[strlen(kludges)],"\01CHRS: %s 4",chrs);
+	 }
+	 else
+	 {
+	    sprintf(&kludges[strlen(kludges)],"\01CHRS: %s 2",chrs);
+	 }
+      }
       
       if(codepage[0])
          sprintf(&kludges[strlen(kludges)],"\01CODEPAGE: %s",codepage);
@@ -2907,7 +2917,6 @@ void command_authinfo(struct var *var)
 #ifdef TLSENABLED
 int start_tls(struct var *var, SOCKET socket){
    // vars
-   SSL_CTX *sslContext;
    
    // tls 
    os_logwrite("(%s): Starting TLS with certificate:%s\n", var->clientid, cfg_certfile);
@@ -2937,7 +2946,7 @@ int start_tls(struct var *var, SOCKET socket){
    }
 
    // Assign Key
-   if ( SSL_CTX_use_PrivateKey_file( sslContext, "/opt/fidonet/etc/server.pem", SSL_FILETYPE_PEM ) != 1){
+   if ( SSL_CTX_use_PrivateKey_file( sslContext, cfg_certfile, SSL_FILETYPE_PEM ) != 1){
         printf("DEBUG: Error on SSL_CTX_use_certificate_file()\n");
    	ERR_print_errors_fp( stderr ); // TODO LOG PROPERLY
 	return 1;

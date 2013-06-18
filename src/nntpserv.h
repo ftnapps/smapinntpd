@@ -5,6 +5,12 @@
 #include <ctype.h>
 #include <time.h>
 
+#ifdef TLSENABLED
+#include <openssl/rand.h>
+#include <openssl/ssl.h>
+#include <openssl/err.h>
+#endif
+
 #ifndef PLATFORM_WIN32
 #define INVALID_SOCKET -1
 #define SOCKET_ERROR -1
@@ -20,7 +26,7 @@ typedef int bool;
 typedef unsigned char uchar;
 
 #include <smapi/msgapi.h>
-#include <smapi/progprot.h>
+//#include <smapi/progprot.h>
 
 struct var
 {
@@ -77,7 +83,7 @@ struct var
 #define CRLF CR LF
 
 #define SERVER_NAME       "JamNNTPd-SMAPI/" PLATFORM_NAME
-#define SERVER_VERSION    "1.0"
+#define SERVER_VERSION    "1.1"
 #define SERVER_PIDVERSION "1"
 
 #define SOCKIO_TIMEOUT 5*60
@@ -110,6 +116,9 @@ extern ulong cfg_maxconn;
 extern uchar *cfg_allowfile;
 extern uchar *cfg_groupsfile;
 extern uchar *cfg_logfile;
+#ifdef TLSENABLED
+extern uchar *cfg_certfile;
+#endif
 extern uchar *cfg_usersfile;
 extern uchar *cfg_xlatfile;
 

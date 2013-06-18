@@ -209,6 +209,18 @@ bool parseargs(int argc, char **argv,uchar *filename,ulong line)
 
          cfg_logfile=argv[++c];
       }
+      #ifdef TLSENABLED
+      else if(stricmp(arg,"-l")==0 || stricmp(arg,"-certpemfile")==0)
+      {
+         if(c+1 == argc)
+         {
+            printf("Missing argument for %s%s\n",argv[c],src);
+            return(FALSE);
+         }
+
+         cfg_certfile=argv[++c];
+      }
+      #endif
       else if(stricmp(arg,"-config")==0)
       {
          if(filename)
@@ -348,6 +360,11 @@ void createconfig(uchar *file)
    if(cfg_echomailjam) fprintf(fp,"echomailjam \"%s\"\n",cfg_echomailjam);
    else                fprintf(fp,"#echomailjam <file>\n");
    
+   #ifdef TLSENABLED
+   if(cfg_certfile) fprintf(fp,"certpemfile \"%s\"\n",cfg_certfile);
+   else                fprintf(fp,"#certpemfile <file>\n");
+   #endif
+   
    fclose(fp);
 }
 
@@ -408,6 +425,7 @@ int main(int argc, char **argv)
              " -origin <origin>      Origin to use instead of contents of Organization line\n"
              " -guestsuffix <suffix> Suffix added to from name of unauthenticated users\n"
              " -echomailjam <file>   Create echomail.jam file for CrashMail and other tossers\n"
+	     " -certpemfile <file>   Server Certificate file to enable TLS secured sockets\n"
              "\n"
              " Options for configuration files:\n"
              "\n"
@@ -507,7 +525,14 @@ int main(int argc, char **argv)
       exit(10);
    }
 
-   os_logwrite(SERVER_NAME " " SERVER_VERSION " is running on port %d",cfg_port);
+   #ifdef TLSENABLED
+   if ( cfg_certfile != NULL ) {
+   	os_logwrite(SERVER_NAME " " SERVER_VERSION "/TLS is running on port %d",cfg_port);
+   } else 
+   #endif
+   {
+   	os_logwrite(SERVER_NAME " " SERVER_VERSION " is running on port %d",cfg_port);
+   }
 
    if(cfg_debug)
       os_logwrite("Compiled " __DATE__ " " __TIME__);
@@ -520,7 +545,8 @@ int main(int argc, char **argv)
       tv.tv_sec=1;
       tv.tv_usec=0;
 	
-      res=select(sock+1,&fds,NULL,NULL,&tv);
+      //res=select(sock+1,&fds,NULL,NULL,&tv);
+      res=select(sock+1,&fds,NULL,NULL,NULL);
 
       if(res != 0 && res != -1)
       {

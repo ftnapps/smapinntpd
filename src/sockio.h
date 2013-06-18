@@ -2,9 +2,12 @@
 
 struct sockio
 {
-	SOCKET socket;
-   uchar buf[SOCKIO_BUFLEN];
+     SOCKET socket;
+      uchar buf[SOCKIO_BUFLEN];
 	int buflen,bufpos;
+#ifdef TLSENABLED
+	SSL *sslHandle;
+#endif
 };
 	
 struct sockio *allocsockio(SOCKET socket);

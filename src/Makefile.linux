@@ -2,7 +2,7 @@
 
 # General
 
-PLATFORMDEF = -DPLATFORM_LINUX
+PLATFORMDEF = -DTLSENABLED -DPLATFORM_LINUX -L/home/fidonet/lib -I/home/fidonet/include 
 EXESUFFIX =
 
 CC = gcc $(DEFS) -Wall
@@ -18,7 +18,7 @@ makechs$(EXESUFFIX): makechs.c
 	$(STRIP) makechs$(EXESUFFIX)
 
 jamnntpd$(EXESUFFIX): $(OBJS)
-	$(CC) -o jamnntpd$(EXESUFFIX) $(OBJS) -lsmapi -lpthread
+	$(CC) -o jamnntpd$(EXESUFFIX) $(OBJS) -L/home/fidonet/lib -lsmapi -lpthread -lssl -lcrypto
 	$(STRIP) jamnntpd$(EXESUFFIX)
 
 nntpserv.o : nntpserv.c

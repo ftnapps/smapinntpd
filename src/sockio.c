@@ -11,6 +11,9 @@ struct sockio *allocsockio(SOCKET socket)
 	sio->buflen=0;
 
 	sio->socket=socket;
+	#ifdef TLSENABLED
+	sio->sslHandle = NULL;
+	#endif
 
 	return(sio);		
 }
@@ -43,31 +46,27 @@ int sockreadchar(struct sockio *sio)
 		tv.tv_usec=0;
 	
 		num++;
-		res=select(sio->socket+1,&fds,NULL,NULL,&tv);
-
-		if(res == -1)
+		#ifdef TLSENABLED
+		if (sio->sslHandle != NULL )
 		{
-			return(-1);
-		}
-		else if(res)
+			res=SSL_read( sio->sslHandle, sio->buf, SOCKIO_BUFLEN);
+		} else
+		#endif
 		{
-	      res=recv(sio->socket,sio->buf,SOCKIO_BUFLEN,0);
-			
-			if(res <= 0)
-         {
-				return(-1);
-         }
-
-			sio->buflen=res;
-			sio->bufpos=0;
-			
-			return(sio->buf[sio->bufpos++]);
+	      		res=recv(sio->socket,sio->buf,SOCKIO_BUFLEN,0);
 		}
 		
-      if(num == SOCKIO_TIMEOUT || get_server_quit())
+		if(res <= 0)
+         	{
 			return(-1);
+         	}
+
+		sio->buflen=res;
+		sio->bufpos=0;
+	
+		return(sio->buf[sio->bufpos++]);
 	}
-}
+}		
 
 bool sockreadline(struct var *var,uchar *buf,int len)
 {
@@ -97,13 +96,31 @@ bool sockreadline(struct var *var,uchar *buf,int len)
 
 void socksendtext(struct var *var,uchar *buf)
 {
+   int rs = 0;
+
    if(var->disconnect)
       return;
 
-   if(cfg_debug)
-      printf("(%s) > %s",var->clientid,buf);
+   if(cfg_debug) {
+   	#ifdef TLSENABLED
+   	if ( var->sio->sslHandle != NULL ) {
+      		printf("(%s)SSL > %s",var->clientid,buf);
+	} else 
+	#endif
+	{
+      		printf("(%s) > %s",var->clientid,buf);
+	}
+   }
 
-   if(send(var->sio->socket,buf,strlen(buf),0) == -1)
+   #ifdef TLSENABLED
+   if ( var->sio->sslHandle != NULL) {
+   	rs = SSL_write( var->sio->sslHandle, buf, strlen(buf));
+   } else 
+   #endif
+   {
+   	rs = send(var->sio->socket,buf,strlen(buf),0);
+   }
+   if ( rs == -1 )
    {
       uchar err[200];
 

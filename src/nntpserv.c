@@ -10,6 +10,9 @@ uchar *cfg_echomailjam;
 uchar *cfg_allowfile  = CFG_ALLOWFILE;
 uchar *cfg_groupsfile = CFG_GROUPSFILE;
 uchar *cfg_logfile    = CFG_LOGFILE;
+#ifdef TLSENABLED
+uchar *cfg_certfile   = NULL;
+#endif
 uchar *cfg_usersfile  = CFG_USERSFILE;
 uchar *cfg_xlatfile   = CFG_XLATFILE;
 
@@ -858,7 +861,7 @@ void command_abhs(struct var *var,uchar *cmd)
       stripreplyaddr(replyaddr);
       
    xlat=findreadxlat(var,group,chrs,codepage,NULL);
-
+   
    if(xlat) strcpy(chrs,xlat->tochrs);
    else     strcpy(chrs,"unknown-8bit");
 
@@ -1345,7 +1348,9 @@ void command_xover(struct var *var)
    socksendtext(var,"." CRLF);
 }
 
-#define POST_MAXSIZE 20000
+//#define POST_MAXSIZE 20000
+// Fidonet standards say a message can be unbounded, however 32k is handled by most FTN software
+#define POST_MAXSIZE 32268
 
 bool getcontenttypepart(uchar *line,ulong *pos,uchar *dest,ulong destlen)
 {
@@ -1433,6 +1438,7 @@ void getparentinfo(struct var *var,uchar *article,uchar *currentgroup,uchar *msg
    fromname[0]=0;
    fromaddr[0]=0;
    *msgnum=0;
+
    
    /* Parse messageid */
    
@@ -1607,6 +1613,8 @@ void getparentinfo(struct var *var,uchar *article,uchar *currentgroup,uchar *msg
    strcpy(fromname,jam_fromname);
    strcpy(fromaddr,jam_fromaddr);
    strcpy(msgid,jam_msgid);
+   os_logwrite("fromname: [%s]\n", fromname);
+
 }
 
 void cancelmessage(struct var *var,uchar *article,struct xlat *postxlat)
@@ -2896,6 +2904,74 @@ void command_authinfo(struct var *var)
 
    return;
 }
+#ifdef TLSENABLED
+int start_tls(struct var *var, SOCKET socket){
+   // vars
+   SSL_CTX *sslContext;
+   
+   // tls 
+   os_logwrite("(%s): Starting TLS with certificate:%s\n", var->clientid, cfg_certfile);
+ 
+   SSL_library_init();
+   SSL_load_error_strings();
+
+   // Assign Cipher set
+   sslContext = SSL_CTX_new( SSLv23_server_method ());
+   if ( sslContext == NULL ) {
+        printf("DEBUG: Error on SSL_CTX_new()\n");
+   	ERR_print_errors_fp( stderr );  // TODO LOG PROPERLY
+	return 1;
+   }
+
+   // No Peer Cert
+   //SSL_CTX_set_verify( sslContext, SSL_VERIFY_NONE, 0 );
+   //SSL_CTX_set_cipher_list(sslContext, "TLSv1+HIGH:SSLv3+HIGH:!aNULL:!eNULL:!3DES:@STRENGTH");
+
+   SSL_CTX_set_options(sslContext, 0 );
+
+   // Assign Certificate
+   if ( SSL_CTX_use_certificate_file( sslContext, cfg_certfile, SSL_FILETYPE_PEM ) != 1){
+        printf("DEBUG: Error on SSL_CTX_use_certificate_file()\n");
+   	ERR_print_errors_fp( stderr ); // TODO LOG PROPERLY
+	return 1;
+   }
+
+   // Assign Key
+   if ( SSL_CTX_use_PrivateKey_file( sslContext, "/opt/fidonet/etc/server.pem", SSL_FILETYPE_PEM ) != 1){
+        printf("DEBUG: Error on SSL_CTX_use_certificate_file()\n");
+   	ERR_print_errors_fp( stderr ); // TODO LOG PROPERLY
+	return 1;
+   }
+
+
+   // Associate Open Socket FD with SSLContext
+   var->sio->sslHandle = SSL_new( sslContext );
+   if ( var->sio->sslHandle == NULL ) {
+        printf("DEBUG: Error on SSL_new()\n");
+   	ERR_print_errors_fp( stderr ); // TODO LOG PROPERLY
+	return 1;
+   } 
+   
+   // Connect SSL Context to the socket
+   if ( SSL_set_fd ( var->sio->sslHandle, var->sio->socket ) !=1 ) {
+        printf("DEBUG: Error on SSL_set_fd()\n");
+   	ERR_print_errors_fp( stderr ); // TODO LOG PROPERLY
+	return 1;
+   }
+
+
+   // Initiate SSL handshake
+   if ( SSL_accept( var->sio->sslHandle ) != 1 ){
+        printf("DEBUG: Error on SSL_accept()\n");
+   	ERR_print_errors_fp( stderr ); // TODO LOG PROPERY
+	return 1;
+   }
+
+   os_logwrite("(%s) TLS Session Started: Protocol: %s, Cipher: %s", var->clientid, SSL_get_version( var->sio->sslHandle), SSL_get_cipher_name( var->sio->sslHandle));
+
+   return 0;
+}
+#endif
 
 void server(SOCKET s)
 {
@@ -2962,7 +3038,7 @@ void server(SOCKET s)
 
       return;
    }
-
+   
    sprintf(var.clientid,"%s:%u",inet_ntoa(fromsa.sin_addr),ntohs(fromsa.sin_port));
 
    mystrncpy(lookup,inet_ntoa(fromsa.sin_addr),200);
@@ -3035,7 +3111,16 @@ void server(SOCKET s)
       return;
    }
 
-
+   #ifdef TLSENABLED 
+   if (cfg_certfile != NULL){
+   	if ( start_tls(&var,s) != 0 ){
+   		os_logwrite("(%s) TLS Session failed to start",var.clientid);
+		var.disconnect = 1;
+	} else {
+   		socksendtext(&var,"200 Welcome to " SERVER_NAME " " SERVER_VERSION " TLS Enabled (posting may or may not be allowed, try your luck)" CRLF);
+	}
+   } else
+   #endif
    socksendtext(&var,"200 Welcome to " SERVER_NAME " " SERVER_VERSION " (posting may or may not be allowed, try your luck)" CRLF);
 
    while(!var.disconnect && !get_server_quit() && sockreadline(&var,line,1000))
@@ -3146,6 +3231,12 @@ void server(SOCKET s)
          else
          {
             socksendtext(&var,"500 Unknown command" CRLF);
+	    printf("DEBUG: Command:\"");
+	    int i;
+	    for (i=0; i<strlen(cmd); i++) {
+	    	printf("%c[%d]",cmd[i], cmd[i]);
+	    }
+	    printf("\"\n");
          }
       }
    }

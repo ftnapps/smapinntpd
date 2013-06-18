@@ -1,3 +1,12 @@
+2013-06-17  Ruedi Knebuehler  <ruedi@baboon.ch>
+
+ - Modification to touch a flag to force another programm to exit.
+
+ - Added feature to have up to 10 different Origins, that are added to a new
+   message by chance.
+
+ - Made some changes to get it to compile.
+
 2013-05-10  Robert James Clay  <jame@rocasa.us>
 
  - Derive SmapiNNTPd v1.0 from JamNNTPd-smapi v1.0

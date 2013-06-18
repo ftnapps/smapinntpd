@@ -3,9 +3,11 @@
 ulong cfg_port        = CFG_PORT;
 ulong cfg_maxconn     = CFG_MAXCONN;
 
-uchar *cfg_origin;
+int	num_origins = -1;
+uchar *cfg_origin[MAX_NUMBERS_ORIGIN];
 uchar *cfg_guestsuffix;
 uchar *cfg_echomailjam;
+uchar *cfg_exitflag;
 
 uchar *cfg_allowfile  = CFG_ALLOWFILE;
 uchar *cfg_groupsfile = CFG_GROUPSFILE;
@@ -2584,8 +2586,16 @@ void command_post(struct var *var)
       if(strlen(text) + strlen(line) < allocsize-1)
          strcat(text,line);
 
-      if(cfg_origin) sprintf(line," * Origin: %s (%s)" CR,cfg_origin,g->aka);
-      else           sprintf(line," * Origin: %s (%s)" CR,organization,g->aka);
+      if(num_origins >= 0)
+      { 
+         int r = rand() % (num_origins+1);
+         sprintf(line," * Origin: %s (%s)" CR,cfg_origin[r],g->aka);
+      }
+      else if (strlen(organization) >0)
+      {
+         sprintf(line," * Origin: %s (%s)" CR,organization,g->aka);           
+      }
+      else sprintf(line," * Origin: %s %s (%s)" CR,SERVER_NAME,SERVER_VERSION,g->aka); 
 
       if(strlen(text) + strlen(line) < allocsize-1)
          strcat(text,line);
@@ -2764,6 +2774,18 @@ void command_post(struct var *var)
          fprintf(fp,"%s %ld\n",g->jampath,xmsg.umsgid);
          fclose(fp);
       }
+   }
+   
+   if(cfg_exitflag)
+   {
+         if(utime(cfg_exitflag,NULL) == -1)
+         {
+            fp = fopen(cfg_exitflag,"a");
+            fclose(fp);
+            os_logwrite("(%s) Flag created %s",var->clientid,cfg_exitflag);
+         } else {
+            os_logwrite("(%s) Flag touched %s",var->clientid,cfg_exitflag);
+         }
    }
    
    free(text);

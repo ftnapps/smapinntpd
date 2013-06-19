@@ -1,3 +1,16 @@
+2013-06-19  Robert James Clay  <jame@rocasa.us>
+
+  * Correct listed copyright years for Johan Billing in the README file.
+
+  * docs/*:
+    - Rename the 'examples' sub directory to 'docs'.
+    - Move the file 'HOWTO' to the docs/ subdirectory.
+    - Add message base type information to docs/smapinntpd.groups.
+    - Created the initial version of the docs/makechs.txt file.
+    - Created the initial version of the docs/smapinntpd.txt file.
+    - Created the initial version of the docs/Makefile file.
+
+
 2013-06-18  Robert James Clay  <jame@rocasa.us>
 
   * Release as version 1.1.

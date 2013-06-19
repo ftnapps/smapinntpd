@@ -1,0 +1,57 @@
+MAKECHS(1)
+==========
+
+NAME
+----
+makechs - A program that can be used to create additional translation tables for
+          use by SmapiNNTPd.
+
+SYNOPSIS
+--------
+makechs <fromchrs> <destchrs> <frommap> [<destmap>]
+
+DESCRIPTION
+-----------
+The *.chs files in the "xlat" and "unicode/xlat" directories are character set
+translation tables in the GoldED+ format. The files were created from mappings
+files found at this URL:
+
+http://www.unicode.org/Public/MAPPINGS/
+
+Fallback sequences for characters that do not exist in the target charset were
+taken from Markus Kuhn's transliteration tables found at the URL below:
+
+http://www.cl.cam.ac.uk/~mgk25/download/transtab.tar.gz
+
+If you want to create additional translation tables, you can easily  do
+so using this utility.
+
+OPTIONS
+-------
+A summary of options is included below:
+
+    <fromchrs>
+        The fidonet name of the charset you want to convert from.
+
+    <destchrs>
+        The fidonet name of the charset you want to convert to.
+
+    <frommap>
+        The Unicode mappings file for the source charset.
+
+    <destmap>
+        The  Unicode  mappings  file for the destination charset. If you
+        don't supply a mappings file, makechs will instead create a  chs
+        file that converts the source charset to utf-8.
+
+The  output  of makechs is written to the console and needs to be redirected to
+the desired file.
+
+SEE ALSO
+--------
+smapinntpd(1).
+
+AUTHOR
+------
+makechs was written by Johan Billing.
+

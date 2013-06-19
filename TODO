@@ -1,0 +1,13 @@
+SmapiNNTPd ToDo
+===============
+
+- For the long form command line options, use the more standard double dash
+  ("--") format instead of the single dash ("-") that is currently being used.
+
+- Add functionality similiar to '-echomailjam' for Squish and *.msg message
+  bases.
+
+- Add separate semaphores for netmail?  A possibly separate default semaphore
+  for any message base type?
+
+

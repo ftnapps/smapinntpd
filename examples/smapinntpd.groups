@@ -2,13 +2,17 @@
 #
 # Syntax:
 #
-# <tagname> <access group> <aka> <jampath> [<default chrs>] [-nochrs]
+# <tagname> <access group> <aka> <path> [<default chrs>] [-nochrs]
 #
 # The tagname is the name of the group. If you enter a '!' character in front
 # of the tagname, the area will be treated as a netmail area and users can 
 # only read messages to or from their realname(s). If you enter a '$' in
 # front of the tagname, the area will be treated as a local area which means
 # that posted messages will have no address, no tearline and no origin line.
+#
+# The first character of the path decides the messagebase type: !path => JAM,
+# $path => Squish, #path => *.msg. If the first character is not any of those,
+# JAM will be assumed.
 #
 # The default charset (optional) is the assumed charset when no CHRS or
 # CODEPAGE line is found. If the default chrs begins with a "!" character,
